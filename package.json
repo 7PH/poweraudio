@@ -8,6 +8,7 @@
     "scripts": {
         "clean": "rm -rf ./build/*",
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
+        "lint-fix": "tslint -c --fix tslint.json 'src/**/*.ts'",
         "start": "npm run clean && node demo/start.js"
     },
     "repository": {

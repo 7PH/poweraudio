@@ -1,7 +1,7 @@
+import {Stage} from "../..";
 import {DisplayObject} from "../engine/DisplayObject";
 import {DisplayObjectContainer} from "../engine/DisplayObjectContainer";
 import {Point} from "../engine/Point";
-import {Stage} from "../engine/Stage";
 import {Node} from "./Node";
 
 export class NodeLinker extends DisplayObject {
@@ -62,7 +62,10 @@ export class NodeLinker extends DisplayObject {
         for (let i = 0; i < N; i++) {
             const node = this.target.children[i] as Node;
 
-            const angle: number = Math.atan2(node.position.y - this.centerPosition.y, node.position.x - this.centerPosition.x);
+            const angle: number = Math.atan2(
+                node.position.y - this.centerPosition.y,
+                node.position.x - this.centerPosition.x,
+            );
             const dist = Point.distance(node.position, this.centerPosition);
             const fx: number = - Math.cos(angle) * 100000 / dist;
             const fy: number = - Math.sin(angle) * 100000 / dist;
@@ -72,12 +75,12 @@ export class NodeLinker extends DisplayObject {
             for (let k = i + 1; k < N; k++) {
                 const otherNode: Node = this.target.children[k] as Node;
 
-                const dist = Point.distance(
+                const dist2 = Point.distance(
                     node.position,
                     otherNode.position,
                 );
 
-                if (dist > 300) {
+                if (dist2 > 300) {
                     node.clearForce("node_" + otherNode.id);
                     otherNode.clearForce("node_" + node.id);
                     continue;
@@ -87,14 +90,15 @@ export class NodeLinker extends DisplayObject {
                     node.position.y - otherNode.position.y,
                     node.position.x - otherNode.position.x,
                 );
-                let fx = 0, fy = 0;
-                if (dist != 0) {
-                    fx = Math.cos(a) * 10000 / dist;
-                    fy = Math.sin(a) * 10000 / dist;
+                let fx2: number = 0;
+                let fy2: number = 0;
+                if (dist2 !== 0) {
+                    fx2 = Math.cos(a) * 10000 / dist2;
+                    fy2 = Math.sin(a) * 10000 / dist2;
                 }
 
-                node.setForce("node_" + otherNode.id, new PIXI.Point(- fx, - fy));
-                otherNode.setForce("node_" + node.id, new PIXI.Point(fx, fy));
+                node.setForce("node_" + otherNode.id, new PIXI.Point(- fx2, - fy2));
+                otherNode.setForce("node_" + node.id, new PIXI.Point(fx2, fy2));
             }
         }
 
