@@ -1,18 +1,21 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "strict": true,
+        "target": "es5",
+        "lib": [
+            "dom",
+            "es5",
+            "es6"
+        ],
+        "outDir": "lib",
+        "sourceMap": true,
+        "removeComments": true,
+        "preserveWatchOutput": true,
+        "noUnusedLocals": false,
         "noImplicitAny": true,
-        "declaration": true,
-        "outDir": "./build/",
-        "target": "es6"
+        "strict": true
     },
     "include": [
-        "src/**/*",
-        "test/**/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist"
+        "src/**/*"
     ]
 }

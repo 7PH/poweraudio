@@ -12,6 +12,10 @@ app.get('/style.css', function(req, res){
     res.sendFile(__dirname + '/style.css');
 });
 
+app.get('/music', function(req, res){
+    res.sendFile(__dirname + '/music.webm');
+});
+
 app.get('/dist/client-bundle.js', function(req, res){
     res.sendFile(__dirname + '/dist/client-bundle.js');
 });

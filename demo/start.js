@@ -1,3 +1,4 @@
+const cp = require('child_process');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -45,3 +46,5 @@ webpack({
 
         console.log(stats.toString({colors: true}));
     });
+
+cp.spawn('node', [path.resolve(__dirname, 'server.js')], { stdio: 'inherit' });

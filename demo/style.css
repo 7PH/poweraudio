@@ -1,0 +1,9 @@
+body {
+    background-color: black;
+    overflow: hidden;
+}
+
+#poweraudio, canvas {
+    width: 100%;
+    height: 100%;
+}

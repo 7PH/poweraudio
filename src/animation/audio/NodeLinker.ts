@@ -3,7 +3,6 @@ import {Point} from "../engine/Point";
 import {DisplayObjectContainer} from "../engine/DisplayObjectContainer";
 import {Stage} from "../engine/Stage";
 import {Node} from "./Node";
-import AudioHandler from "../../audio/AudioHandler";
 
 
 export class NodeLinker extends DisplayObject {
@@ -39,7 +38,6 @@ export class NodeLinker extends DisplayObject {
 
             const node: Node = this.target.children[i] as Node;
             const distance: number = Point.distance(node.position, this.centerPosition);
-            console.log(distance);
             if (distance > this.stage.getWidth() / 10)
                 continue;
 
