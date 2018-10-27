@@ -17,7 +17,7 @@ export class DisplayObject extends PIXI.Container {
     constructor(stage: Stage, appendGraphics?: boolean) {
         super();
         // params
-        appendGraphics = typeof(appendGraphics) == "undefined" ? true : appendGraphics;
+        appendGraphics = typeof(appendGraphics) === "undefined" ? true : appendGraphics;
 
         this.id = DisplayObject.ID ++;
 
@@ -66,6 +66,9 @@ export class DisplayObject extends PIXI.Container {
         // acceleration
         this.acceleration.set(0, 0);
         for (const forceName in this.forces) {
+            if (! this.forces.hasOwnProperty(forceName)) {
+                continue;
+            }
             this.acceleration.x += this.forces[forceName].x;
             this.acceleration.y += this.forces[forceName].y;
         }

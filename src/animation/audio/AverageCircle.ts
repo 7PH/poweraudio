@@ -37,7 +37,7 @@ export class AverageCircle extends DisplayObject {
     public update(delta: number) {
         super.update(delta);
 
-        this.eyesClosed = Math.floor(10 * Date.now() / 1000) % 30 == 0;
+        this.eyesClosed = Math.floor(10 * Date.now() / 1000) % 30 === 0;
         this.lineWidth = 1 + AudioHandler.linearAverage * 8;
         this.filter.blur = 0.2 + 8 * Math.exp(- 16 * AudioHandler.linearAverage);
         this.radius = this.baseRadius + 100 * AudioHandler.linearAverage;
@@ -97,8 +97,7 @@ export class AverageCircle extends DisplayObject {
         this.graphics.beginFill(0xFFFFFF, 0.2);
         this.graphics.lineStyle(this.lineWidth, 0xFFFFFF);
         this.graphics.moveTo(points[0].x, points[0].y);
-        for (let i: number = 0; i < points.length; ++ i) {
-            const point = points[i];
+        for (const point of points) {
             this.graphics.lineTo(point.x, point.y);
         }
 
@@ -114,13 +113,7 @@ export class AverageCircle extends DisplayObject {
 
         // eyes
         // 1 blink of 100ms every 3s
-        let eyesSize: number;
-        if (this.eyesClosed) {
-            eyesSize = this.radius * 0.02;
-        } else {
-            // eyes open
-            eyesSize = this.radius * 0.1;
-        }
+        const eyesSize: number = this.eyesClosed ? this.radius * 0.02 : this.radius * 0.1;
         const eyesY: number = -this.radius * 0.3;
         this.graphics.lineStyle(1, 0xFFFFFF);
         this.graphics.beginFill(0xFFFFFF, 1);
