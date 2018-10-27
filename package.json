@@ -1,29 +1,29 @@
 {
-    "name": "deadlockjs",
-    "version": "1.4.14",
-    "description": "Lightweight Node.js/Express framework for building secured, clustered and well-designed APIs.",
-    "main": "./dist/src/index.js",
-    "types": "./dist/src/index.d.ts",
+    "name": "power-audio",
+    "version": "0.0.0",
+    "private": true,
+    "description": "",
+    "main": "./build/src/index.js",
+    "types": "./build/src/index.d.ts",
     "scripts": {
         "clean": "rm -rf ./build/*",
         "start": "npm run clean && node demo/start.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/7PH/PowerAudio.git"
+        "url": "git+https://github.com/7PH/power-audio.git"
     },
     "keywords": [],
     "author": "Benjamin Raymond <b.raymond@protonmail.com>",
-    "license": "ISC",
+    "license": "MIT",
     "bugs": {
-        "url": "https://github.com/7PH/PowerAudio/issues"
+        "url": "https://github.com/7PH/power-audio/issues"
     },
-    "homepage": "https://github.com/7PH/PowerAudio#readme",
-    "dependencies": {
-        "@types/pixi.js": "^4.8.2"
-    },
+    "homepage": "https://github.com/7PH/power-audio#readme",
+    "dependencies": {},
     "devDependencies": {
         "child_process": "^1.0.2",
+        "@types/pixi.js": "^4.8.2",
         "express": "^4.16.4",
         "os": "^0.1.1",
         "ts-loader": "^5.2.2",
