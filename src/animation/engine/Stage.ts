@@ -64,9 +64,10 @@ export class Stage extends DisplayObjectContainer {
         this.addChild(nodeContainer);
 
         // average circle
-        const avgCircle: DisplayObject = new AverageCircle(this);
-        avgCircle.position.x = this.getWidth() / 2;
-        avgCircle.position.y = 6 * this.getHeight() / 10;
+        const avgCircle: DisplayObject = new AverageCircle(
+            this,
+            this.getWidth() / 2,
+            6 * this.getHeight() / 10);
         this.addChild(avgCircle);
 
         this.addChildAt(new AnimatedBackground(this), 0);

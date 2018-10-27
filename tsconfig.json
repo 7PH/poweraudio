@@ -7,12 +7,8 @@
             "es5",
             "es6"
         ],
-        "outDir": "lib",
-        "sourceMap": true,
+        "outDir": "build",
         "removeComments": true,
-        "preserveWatchOutput": true,
-        "noUnusedLocals": false,
-        "noImplicitAny": true,
         "strict": true
     },
     "include": [

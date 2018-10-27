@@ -13,7 +13,7 @@ app.get('/style.css', function(req, res){
 });
 
 app.get('/music', function(req, res){
-    res.sendFile(__dirname + '/music.webm');
+    res.sendFile(__dirname + '/music.mp3');
 });
 
 app.get('/dist/client-bundle.js', function(req, res){

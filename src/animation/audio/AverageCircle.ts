@@ -1,6 +1,6 @@
 import {DisplayObject} from "../engine/DisplayObject";
 import AudioHandler from "../../audio/AudioHandler";
-import {Stage} from "../engine/Stage";
+import {Stage} from "../..";
 import BlurFilter = PIXI.filters.BlurFilter;
 
 export class AverageCircle extends DisplayObject {
@@ -13,9 +13,13 @@ export class AverageCircle extends DisplayObject {
 
     public eyesClosed: boolean = false;
 
+    public targetPosition: PIXI.Point = new PIXI.Point(0, 0);
+
+    public lastUpdatePosition: number = 0;
+
     public readonly filter: BlurFilter;
 
-    constructor(stage: Stage) {
+    constructor(stage: Stage, private centerX: number, private centerY: number) {
         super(stage);
 
         this.baseRadius = Math.min(stage.getWidth(), stage.getHeight()) / 12;
@@ -23,9 +27,51 @@ export class AverageCircle extends DisplayObject {
 
         this.filter = new PIXI.filters.BlurFilter();
         this.filters = [this.filter];
+
+        this.setFriction(1);
+
+        this.position.x = centerX;
+        this.position.y = centerY;
     }
 
-    redraw() {
+    update(delta: number) {
+        super.update(delta);
+
+        this.eyesClosed = Math.floor(10 * Date.now() / 1000) % 30 == 0;
+        this.lineWidth = 1 + AudioHandler.linearAverage * 8;
+        this.filter.blur = 0.2 + 8 * Math.exp(- 16 * AudioHandler.linearAverage);
+        this.radius = this.baseRadius + 100 * AudioHandler.linearAverage;
+
+        this.setForce('main', {
+            x: this.targetPosition.x - this.position.x,
+            y: this.targetPosition.y - this.position.y,
+        });
+
+        // update shift from center
+        if (Date.now() > 400 + this.lastUpdatePosition) {
+            this.updatePosition();
+            this.lastUpdatePosition = Date.now();
+        }
+
+        // redraw
+        this.redraw();
+    }
+
+    /**
+     *
+     */
+    private updatePosition() {
+
+        const angle: number = Math.random() * 2 * Math.PI;
+        const radius: number = this.baseRadius * .5;
+        const x: number = Math.cos(angle) * radius;
+        const y: number = Math.sin(angle) * radius;
+
+        this.targetPosition.x = this.centerX + x;
+        this.targetPosition.y = this.centerY + y;
+    }
+
+    private redraw() {
 
         if (typeof this.graphics === 'undefined')
             return;
@@ -66,7 +112,6 @@ export class AverageCircle extends DisplayObject {
 
         // eyes
         // 1 blink of 100ms every 3s
-        this.eyesClosed = Math.floor(10 * Date.now() / 1000) % 30 == 0;
         let eyesSize: number;
         if (this.eyesClosed) {
             eyesSize = this.radius * 0.02;
@@ -79,15 +124,5 @@ export class AverageCircle extends DisplayObject {
         this.graphics.beginFill(0xFFFFFF, 1);
         this.graphics.drawRect(- eyesSize * 0.5, eyesY - eyesSize * 0.5, eyesSize, eyesSize);
         this.graphics.drawRect(this.radius * 0.3 - eyesSize * 0.5, eyesY - eyesSize * 0.5, eyesSize, eyesSize);
-    }
-
-    update(delta: number) {
-        super.update(delta);
-
-        this.lineWidth = 1 + AudioHandler.linearAverage * 8;
-        this.filter.blur = 0.2 + 8 * Math.exp(- 16 * AudioHandler.linearAverage);
-        this.radius = this.baseRadius + 100 * AudioHandler.linearAverage;
-
-        this.redraw();
     }
 }

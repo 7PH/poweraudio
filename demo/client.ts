@@ -8,15 +8,6 @@ let stage: Stage;
  */
 async function init() {
 
-    // fps counter
-    setInterval(() => {
-        const fps = (1 / stage.lastDelta);
-        let el = document.getElementById('fps');
-        if (el === null)
-            return;
-        el.innerHTML = Math.floor(fps).toString();
-    }, 1000);
-
     // start song
     await restartSong();
 
@@ -35,7 +26,7 @@ async function restartSong() {
         AudioHandler.song.currentTime = 0;
     }
 
-    AudioHandler.init("/music");
+    AudioHandler.init("/music?" + Date.now());
     await AudioHandler.play();
 }
 

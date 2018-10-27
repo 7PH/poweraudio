@@ -22,7 +22,7 @@ webpack({
     },
 
     resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ]
+        extensions: ['.tsx', '.ts', '.js']
     },
 
     output: {
