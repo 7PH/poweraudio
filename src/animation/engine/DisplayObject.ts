@@ -1,7 +1,6 @@
 import Graphics = PIXI.Graphics;
 import {Stage} from "./Stage";
 
-
 export class DisplayObject extends PIXI.Container {
 
     private static ID: number = 1;
@@ -15,10 +14,10 @@ export class DisplayObject extends PIXI.Container {
     public forces: {[forceId: string]: {x: number, y: number}};
     public mass: number;
 
-    constructor (stage: Stage, appendGraphics?: boolean) {
+    constructor(stage: Stage, appendGraphics?: boolean) {
         super();
         // params
-        appendGraphics = typeof(appendGraphics) == 'undefined' ? true : appendGraphics;
+        appendGraphics = typeof(appendGraphics) == "undefined" ? true : appendGraphics;
 
         this.id = DisplayObject.ID ++;
 
@@ -37,30 +36,31 @@ export class DisplayObject extends PIXI.Container {
         }
     }
 
-    setForce (name: string, vector: PIXI.Point | {x: number , y: number}) {
+    public setForce(name: string, vector: PIXI.Point | {x: number , y: number}) {
         this.forces[name] = {
             x: vector.x,
-            y: vector.y
+            y: vector.y,
         };
     }
 
-    clearForce (name: string) {
+    public clearForce(name: string) {
         delete this.forces[name];
     }
 
-    setFriction (value: number | PIXI.Point | {x: number, y: number}) {
-        if (typeof value === "number")
+    public setFriction(value: number | PIXI.Point | {x: number, y: number}) {
+        if (typeof value === "number") {
             this.friction = new PIXI.Point(value, value);
-        else
+        } else {
             this.friction.set(value.x, value.y);
+        }
     }
 
     /** Updates the DisplayObject position, velocity & acceleration */
-    update(delta: number) {
+    public update(delta: number) {
         // friction
-        this.setForce('friction', new PIXI.Point(
+        this.setForce("friction", new PIXI.Point(
             - this.friction.x * this.velocity.x,
-            - this.friction.y * this.velocity.y
+            - this.friction.y * this.velocity.y,
         ));
 
         // acceleration
@@ -81,4 +81,3 @@ export class DisplayObject extends PIXI.Container {
         this.position.y += delta * this.velocity.y;
     }
 }
-

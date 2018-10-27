@@ -10,7 +10,7 @@ export class NodeContainer extends DisplayObjectContainer {
 
     public nodes: DisplayObjectContainer;
 
-    constructor (stage: Stage) {
+    constructor(stage: Stage) {
         super(stage);
 
         this.nodes = new DisplayObjectContainer(this.stage);
@@ -23,9 +23,11 @@ export class NodeContainer extends DisplayObjectContainer {
      *
      */
     public populate() {
-        for (let x = 10; x < this.stage.getWidth(); x += 200)
-            for (let y = 10; y < this.stage.getHeight(); y += 200)
+        for (let x = 10; x < this.stage.getWidth(); x += 200) {
+            for (let y = 10; y < this.stage.getHeight(); y += 200) {
                 this.addNode(x + 12 * Math.random(), y + 12 * Math.random(), 0, 0);
+            }
+        }
     }
 
     /**

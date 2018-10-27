@@ -1,8 +1,7 @@
-import {DisplayObject} from "../engine/DisplayObject";
 import AudioHandler from "../../audio/AudioHandler";
+import {DisplayObject} from "../engine/DisplayObject";
 import {Stage} from "../engine/Stage";
 import BlurFilter = PIXI.filters.BlurFilter;
-
 
 export class Node extends DisplayObject {
 
@@ -10,22 +9,23 @@ export class Node extends DisplayObject {
 
     public radius: number = 2 + Math.random() * 4;
 
-    constructor (stage: Stage) {
+    constructor(stage: Stage) {
         super(stage);
 
-        this.color = 0xFFFFFF * (Math.random()*.5 + .5);
+        this.color = 0xFFFFFF * (Math.random() * .5 + .5);
         this.setFriction(1);
     }
 
-    redraw() {
+    public redraw() {
 
-        if (typeof this.graphics === 'undefined')
+        if (typeof this.graphics === "undefined") {
             return;
+        }
 
         // chose color
-        let avg: number = 0.5 + Math.min(8, 64 * AudioHandler.average) / 16;
-        let value: number = avg * 0xFF | 0;
-        let grayscale: number = parseInt('0x' + ((value << 16) | (value << 8) | value).toString(16), 16);
+        const avg: number = 0.5 + Math.min(8, 64 * AudioHandler.average) / 16;
+        const value: number = avg * 0xFF | 0;
+        const grayscale: number = parseInt("0x" + ((value << 16) | (value << 8) | value).toString(16), 16);
 
         this.graphics.clear();
         this.graphics.beginFill(AudioHandler.average > 0.15 ? this.color : grayscale);
@@ -33,7 +33,7 @@ export class Node extends DisplayObject {
         this.graphics.endFill();
     }
 
-    update(delta: number) {
+    public update(delta: number) {
         super.update(delta);
 
         // get coef according to the current music amplitude
@@ -41,11 +41,9 @@ export class Node extends DisplayObject {
         this.position.x += delta * this.velocity.x * (coef - 1);
         this.position.y += delta * this.velocity.y * (coef - 1);
 
-        if (this.x < 0) this.x = this.stage.getWidth();
-        else if (this.x > this.stage.getWidth()) this.x = 0;
+        if (this.x < 0) { this.x = this.stage.getWidth(); } else if (this.x > this.stage.getWidth()) { this.x = 0; }
 
-        if (this.y < 0) this.y = this.stage.getHeight();
-        else if (this.y > this.stage.getHeight()) this.y = 0;
+        if (this.y < 0) { this.y = this.stage.getHeight(); } else if (this.y > this.stage.getHeight()) { this.y = 0; }
 
         this.redraw();
     }

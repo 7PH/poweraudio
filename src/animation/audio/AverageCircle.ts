@@ -1,6 +1,6 @@
-import {DisplayObject} from "../engine/DisplayObject";
-import AudioHandler from "../../audio/AudioHandler";
 import {Stage} from "../..";
+import AudioHandler from "../../audio/AudioHandler";
+import {DisplayObject} from "../engine/DisplayObject";
 import BlurFilter = PIXI.filters.BlurFilter;
 
 export class AverageCircle extends DisplayObject {
@@ -34,7 +34,7 @@ export class AverageCircle extends DisplayObject {
         this.position.y = centerY;
     }
 
-    update(delta: number) {
+    public update(delta: number) {
         super.update(delta);
 
         this.eyesClosed = Math.floor(10 * Date.now() / 1000) % 30 == 0;
@@ -42,7 +42,7 @@ export class AverageCircle extends DisplayObject {
         this.filter.blur = 0.2 + 8 * Math.exp(- 16 * AudioHandler.linearAverage);
         this.radius = this.baseRadius + 100 * AudioHandler.linearAverage;
 
-        this.setForce('main', {
+        this.setForce("main", {
             x: this.targetPosition.x - this.position.x,
             y: this.targetPosition.y - this.position.y,
         });
@@ -73,8 +73,9 @@ export class AverageCircle extends DisplayObject {
 
     private redraw() {
 
-        if (typeof this.graphics === 'undefined')
+        if (typeof this.graphics === "undefined") {
             return;
+        }
 
         this.graphics.clear();
 
@@ -82,16 +83,17 @@ export class AverageCircle extends DisplayObject {
         const wave: Float32Array = AudioHandler.firstOrderWaveform;
         const waveAverage: number = wave.reduce((acc, v) => acc + v, 0) / wave.length;
         const maxAmplitude: number = 100; // in pixels
-        let points: {x: number, y: number}[] = [];
+        const points: Array<{x: number, y: number}> = [];
         for (let i: number = 0, angle: number = Math.PI / 2; i < wave.length; ++ i, angle += Math.PI / wave.length) {
             const amplitude: number = Math.max(0, wave[i] - waveAverage);
             const x: number = Math.cos(angle) * (this.radius + maxAmplitude * amplitude);
             const y: number = Math.sin(angle) * (this.radius + maxAmplitude * amplitude);
             points.push({x, y});
         }
-        let n: number = points.length;
-        for (let i: number = n - 1; i >= 0; -- i)
-            points.push({x: - points[i].x, y: points[i].y})
+        const n: number = points.length;
+        for (let i: number = n - 1; i >= 0; -- i) {
+            points.push({x: - points[i].x, y: points[i].y});
+        }
         this.graphics.beginFill(0xFFFFFF, 0.2);
         this.graphics.lineStyle(this.lineWidth, 0xFFFFFF);
         this.graphics.moveTo(points[0].x, points[0].y);
@@ -119,7 +121,7 @@ export class AverageCircle extends DisplayObject {
             // eyes open
             eyesSize = this.radius * 0.1;
         }
-        let eyesY: number = -this.radius * 0.3;
+        const eyesY: number = -this.radius * 0.3;
         this.graphics.lineStyle(1, 0xFFFFFF);
         this.graphics.beginFill(0xFFFFFF, 1);
         this.graphics.drawRect(- eyesSize * 0.5, eyesY - eyesSize * 0.5, eyesSize, eyesSize);

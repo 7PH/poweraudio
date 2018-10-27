@@ -1,70 +1,66 @@
 
-
 export default class AudioHandler {
 
-    static readonly FFT_SIZE: number = 256;
+    public static readonly FFT_SIZE: number = 256;
 
-    static readonly STATS_UPDATE_INTERVAL: number = 1000 / 40;
+    public static readonly STATS_UPDATE_INTERVAL: number = 1000 / 40;
 
-    static context: AudioContext;
+    public static context: AudioContext;
 
-    static analyser: AnalyserNode;
+    public static analyser: AnalyserNode;
 
-    static gain: GainNode;
+    public static gain: GainNode;
 
-    static song: HTMLAudioElement;
+    public static song: HTMLAudioElement;
 
     /**
      * Current waveform
      */
-    static waveform: Float32Array;
+    public static waveform: Float32Array;
 
     /**
      * Interpolated waveform
      */
-    static firstOrderWaveform: Float32Array;
+    public static firstOrderWaveform: Float32Array;
 
     /**
      * Current average
      */
-    static average: number = 0;
+    public static average: number = 0;
 
     /**
      * Flattened average (1st order)
      */
-    static firstOrderAverage: number = 0;
+    public static firstOrderAverage: number = 0;
 
     /**
      * Flattened average (linear)
      */
-    static linearAverage: number = 0;
+    public static linearAverage: number = 0;
 
     /**
      * Current minimum amplitude on the FFT
      */
-    static minimum: number = 0;
+    public static minimum: number = 0;
 
     /**
      * Current minimum amplitude on the FFT
      */
-    static maximum: number = 0;
+    public static maximum: number = 0;
 
     /**
      *
      */
-    static isPlaying: boolean;
-
-    private static lastUpdateDelta: number = 0;
-    private static updateStatsInterval: any;
+    public static isPlaying: boolean;
 
     /**
      *
      * @param {string} src
      */
-    static init(src: string) {
+    public static init(src: string) {
 
         // context
-        this.context = new (AudioContext || (<any>window)['webkitAudioContext'])();
+        this.context = new (AudioContext || (window as any).webkitAudioContext)();
 
         // gain
         this.gain = AudioHandler.context.createGain();
@@ -72,7 +68,7 @@ export default class AudioHandler {
 
         // song
         this.song = new Audio(src);
-        this.song.crossOrigin = 'anonymous';
+        this.song.crossOrigin = "anonymous";
         this.isPlaying = false;
 
         // source
@@ -94,7 +90,7 @@ export default class AudioHandler {
     /**
      * @TODO optimize. functional javascript gives bad performances
      */
-    static updateStats() {
+    public static updateStats() {
 
         const delta: number = (Date.now() - this.lastUpdateDelta) / 1000;
 
@@ -105,10 +101,11 @@ export default class AudioHandler {
         this.firstOrderAverage += (this.average - this.firstOrderAverage) * 0.5 * delta;
         this.linearAverage += delta * (this.average > this.linearAverage ? 1 : -1);
         this.waveform.forEach((value, index) => {
-            if (value > this.firstOrderWaveform[index])
+            if (value > this.firstOrderWaveform[index]) {
                 this.firstOrderWaveform[index] = value;
-            else
+            } else {
                 this.firstOrderWaveform[index] += (value - this.firstOrderWaveform[index]) * 1.1 * delta;
+            }
         });
 
         this.lastUpdateDelta = Date.now();
@@ -118,7 +115,7 @@ export default class AudioHandler {
      *
      * @returns {Promise<void>}
      */
-    static async play() {
+    public static async play() {
 
         await this.song.play();
 
@@ -126,4 +123,7 @@ export default class AudioHandler {
 
         this.updateStats();
     }
+
+    private static lastUpdateDelta: number = 0;
+    private static updateStatsInterval: any;
 }
