@@ -1,7 +1,7 @@
-import {Stage} from "../..";
 import {DisplayObject} from "../engine/DisplayObject";
 import {DisplayObjectContainer} from "../engine/DisplayObjectContainer";
 import {Point} from "../engine/Point";
+import {Stage} from "../engine/Stage";
 import {Node} from "./Node";
 
 export class NodeLinker extends DisplayObject {

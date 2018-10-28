@@ -1,7 +1,7 @@
-import {Stage} from "../..";
 import AudioHandler from "../../audio/AudioHandler";
 import {DisplayObject} from "../engine/DisplayObject";
 import BlurFilter = PIXI.filters.BlurFilter;
+import {Stage} from "../engine/Stage";
 
 export class AverageCircle extends DisplayObject {
 

@@ -1,4 +1,6 @@
-
+/**
+ * @TODO this should not be static
+ */
 export default class AudioHandler {
 
     public static readonly FFT_SIZE: number = 256;
