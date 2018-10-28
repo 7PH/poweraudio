@@ -1,1 +1,3 @@
-export * from "./PowerAudio";
+import {PowerAudio} from "./PowerAudio";
+
+module.exports = PowerAudio;
