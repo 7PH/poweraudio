@@ -17,7 +17,7 @@ const outDir = "dist";
  * Bundle JavaScript files produced by the `tsc` task, into a single file named `xterm.js` with
  * Browserify.
  */
-gulp.task('browserify', function() {
+gulp.task('bundle-browserify', function() {
 
     // Ensure that the build directory exists
     fs.ensureDirSync(buildDir);
@@ -45,5 +45,9 @@ gulp.task('browserify', function() {
     //return merge(bundleStream, copyStylesheets);
 });
 
-gulp.task('bundle', gulp.series('browserify'));
-gulp.task('default', gulp.series('bundle'));
+// build bundle .js
+gulp.task('build-bundle', gulp.series('bundle-browserify'));
+
+// rebuild demo
+
+gulp.task('default', gulp.series('build-bundle'));
