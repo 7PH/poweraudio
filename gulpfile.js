@@ -9,6 +9,8 @@ const gulp = require('gulp');
 const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
+const webpack = require('gulp-webpack');
+const path = require('path');
 
 const buildDir = process.env.BUILD_DIR || 'build';
 const outDir = "dist";
@@ -45,9 +47,43 @@ gulp.task('bundle-browserify', function() {
     //return merge(bundleStream, copyStylesheets);
 });
 
+/**
+ *
+ */
+gulp.task('demo-webpack', function() {
+    return gulp
+        .src('./demo/client.ts')
+        .pipe(webpack({
+            entry: path.resolve(__dirname, 'client.ts'),
+            devtool: 'inline-source-map',
+            module: {
+                rules: [
+                    {
+                        test: /\.tsx?$/,
+                        use: 'ts-loader',
+                        exclude: /node_modules/
+                    }
+                ]
+            },
+            resolve: { extensions: ['.tsx', '.ts', '.js'] },
+            output: {
+                filename: 'client-bundle.js',
+                path: path.resolve(__dirname, 'dist')
+            },
+            mode: 'production'
+        }))
+        .pipe(gulp.dest('docs/'));
+});
+gulp.task('copy-demo-to-docs', function() {
+    return gulp
+        .src('demo/**/*')
+        .pipe(gulp.dest('docs/'));
+});
+
 // build bundle .js
 gulp.task('build-bundle', gulp.series('bundle-browserify'));
 
 // rebuild demo
+gulp.task('build-docs', gulp.series('copy-demo-to-docs'));
 
 gulp.task('default', gulp.series('build-bundle'));

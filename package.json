@@ -5,7 +5,7 @@
     "main": "./build/src/index.js",
     "types": "./build/src/index.d.ts",
     "scripts": {
-        "clean": "rm -rf ./build/*",
+        "clean": "rm -rf ./build/* ./docs/*",
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "lint-fix": "tslint -c --fix tslint.json 'src/**/*.ts'",
         "start": "npm run clean && node demo/start.js",
@@ -34,6 +34,7 @@
         "gulp": "^4.0.0",
         "gulp-sourcemaps": "^2.6.4",
         "gulp-uglify": "^3.0.1",
+        "gulp-webpack": "^1.5.0",
         "os": "^0.1.1",
         "ts-loader": "^5.2.2",
         "tslint": "^5.11.0",

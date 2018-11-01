@@ -1,4 +1,4 @@
-import {Stage} from "../src";
+import {Stage} from "../src/animation/engine/Stage";
 import AudioHandler from "../src/audio/AudioHandler";
 
 let stage: Stage;
@@ -12,7 +12,7 @@ async function init() {
     await restartSong();
 
     // animation
-    stage = new Stage('poweraudio');
+    stage = new Stage("poweraudio");
     stage.start();
 }
 
@@ -21,7 +21,7 @@ async function init() {
  */
 async function restartSong() {
 
-    if (typeof AudioHandler.song !== 'undefined') {
+    if (typeof AudioHandler.song !== "undefined") {
         AudioHandler.song.pause();
         AudioHandler.song.currentTime = 0;
     }

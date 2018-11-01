@@ -37,14 +37,13 @@ webpack({
     watch: true
 })
     .watch({
-
         aggregateTimeout: 300,
-
         poll: undefined
-
     }, (err, stats) => {
 
         console.log(stats.toString({colors: true}));
+
+        cp.spawn('gulp', ['copy-demo-to-docs'], {stdio: 'inherit'});
     });
 
 cp.spawn('node', [path.resolve(__dirname, 'server.js')], { stdio: 'inherit' });
