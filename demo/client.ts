@@ -26,7 +26,7 @@ async function restartSong() {
         AudioHandler.song.currentTime = 0;
     }
 
-    AudioHandler.init("/music.mp3?" + Date.now());
+    AudioHandler.init("music.mp3?" + Date.now());
     await AudioHandler.play();
 }
 

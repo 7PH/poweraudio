@@ -107,7 +107,7 @@
 	                        AudioHandler_1.default.song.pause();
 	                        AudioHandler_1.default.song.currentTime = 0;
 	                    }
-	                    AudioHandler_1.default.init("/music.mp3?" + Date.now());
+	                    AudioHandler_1.default.init("music.mp3?" + Date.now());
 	                    return [4, AudioHandler_1.default.play()];
 	                case 1:
 	                    _a.sent();
