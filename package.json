@@ -8,7 +8,7 @@
         "clean": "rm -rf ./build/* ./docs/*",
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "lint-fix": "tslint -c --fix tslint.json 'src/**/*.ts'",
-        "start": "npm run clean && node demo/start.js",
+        "start": "npm run build && http-server ./docs;",
         "build": "npm run clean && tsc && gulp",
         "test": "npm run build && mocha build/test/index.js"
     },

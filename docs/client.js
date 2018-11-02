@@ -93,6 +93,8 @@
 	                    _a.sent();
 	                    stage = new Stage_1.Stage("poweraudio");
 	                    stage.start();
+	                    document.getElementById("start-button").remove();
+	                    document.removeEventListener("click", init);
 	                    return [2];
 	            }
 	        });
@@ -116,7 +118,7 @@
 	        });
 	    });
 	}
-	window.onload = function () { return init(); };
+	document.addEventListener("click", init.bind(window));
 
 
 /***/ }),

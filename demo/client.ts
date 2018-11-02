@@ -8,12 +8,16 @@ let stage: Stage;
  */
 async function init() {
 
+
     // start song
     await restartSong();
 
     // animation
     stage = new Stage("poweraudio");
     stage.start();
+
+    (document.getElementById("start-button") as any).remove();
+    document.removeEventListener("click", init);
 }
 
 /**
@@ -30,4 +34,4 @@ async function restartSong() {
     await AudioHandler.play();
 }
 
-window.onload = () => init();
+document.addEventListener("click", init.bind(window));
