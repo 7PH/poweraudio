@@ -56,7 +56,7 @@ gulp.task('demo-webpack', function() {
 
 gulp.task('demo-copy', function() {
     return gulp
-        .src('demo/**/*')
+        .src('demo/**/*.{js,html,mp3,css}')
         .pipe(gulp.dest('docs/'));
 });
 
