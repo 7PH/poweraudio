@@ -88,13 +88,14 @@
 	    return __awaiter(this, void 0, void 0, function () {
 	        return __generator(this, function (_a) {
 	            switch (_a.label) {
-	                case 0: return [4, restartSong()];
+	                case 0:
+	                    document.removeEventListener("click", init);
+	                    return [4, restartSong()];
 	                case 1:
 	                    _a.sent();
 	                    stage = new Stage_1.Stage("poweraudio");
 	                    stage.start();
 	                    document.getElementById("start-button").remove();
-	                    document.removeEventListener("click", init);
 	                    return [2];
 	            }
 	        });
@@ -118,7 +119,7 @@
 	        });
 	    });
 	}
-	document.addEventListener("click", init.bind(window));
+	document.addEventListener("click", init);
 
 
 /***/ }),

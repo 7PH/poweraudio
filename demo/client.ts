@@ -8,6 +8,7 @@ let stage: Stage;
  */
 async function init() {
 
+    document.removeEventListener("click", init);
 
     // start song
     await restartSong();
@@ -17,7 +18,6 @@ async function init() {
     stage.start();
 
     (document.getElementById("start-button") as any).remove();
-    document.removeEventListener("click", init);
 }
 
 /**
@@ -34,4 +34,4 @@ async function restartSong() {
     await AudioHandler.play();
 }
 
-document.addEventListener("click", init.bind(window));
+document.addEventListener("click", init);
