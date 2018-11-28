@@ -1,5 +1,8 @@
 # Power Audio
 
+<img src="https://travis-ci.com/7PH/power-audio.svg?branch=master">
+
+
 A very cool audio visualization library you can integrate on the web
 
 <img src="doc/banner.png" style="width: 100%">
