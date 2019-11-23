@@ -10,7 +10,6 @@ const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const webpack = require('gulp-webpack');
-const path = require('path');
 
 const buildDir = process.env.BUILD_DIR || 'build';
 const outDir = "dist";
@@ -56,7 +55,7 @@ gulp.task('demo-webpack', function() {
 
 gulp.task('demo-copy', function() {
     return gulp
-        .src('demo/**/*.{js,html,mp3,css}')
+        .src(['demo/**/*.{js,html,mp3,css}', 'demo/CNAME'])
         .pipe(gulp.dest('docs/'));
 });
 

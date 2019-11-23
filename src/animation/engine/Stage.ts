@@ -1,25 +1,37 @@
-import {AnimatedBackground} from "../audio/AnimatedBackground";
-import {AverageCircle} from "../audio/AverageCircle";
-import {NodeContainer} from "../audio/NodeContainer";
-import {DisplayObject} from "./DisplayObject";
 import {DisplayObjectContainer} from "./DisplayObjectContainer";
+import {NodeContainer} from "../audio/NodeContainer";
+import {PowerCircle} from "../audio/PowerCircle";
+import {AnimatedBackground} from "../audio/AnimatedBackground";
 
 /**
- *
+ * Base container of every object on the scene
  */
 export class Stage extends DisplayObjectContainer {
 
+    /**
+     * HTML id of the canvas container
+     */
     public canvasContainerID: string;
 
+    /**
+     * Reference to the canvas container
+     */
     public canvasContainer: HTMLDivElement;
 
-    public lastDelta: number;
+    /**
+     * PIXI renderer
+     */
+    public renderer: PIXI.Renderer;
 
-    public renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
+    /**
+     * Date of the last call to update
+     */
+    public lastUpdateDelta: number = 0;
 
-    public lastUpdateDelta: number;
-
-    public readonly mouse: { position: PIXI.Point };
+    /**
+     * Last delta value (seconds)
+     */
+    public lastDelta: number = 0;
 
     constructor(canvasID: string) {
 
@@ -27,28 +39,45 @@ export class Stage extends DisplayObjectContainer {
         //  even if it is null on the Stage itself.
         super(null as any as Stage);
 
+        // init container
         this.canvasContainerID = canvasID;
         this.canvasContainer = document.getElementById(canvasID) as HTMLDivElement;
-        this.lastDelta = 0;
 
-        this.renderer = PIXI.autoDetectRenderer(
-            window.innerWidth,
-            window.innerHeight,
-        );
+        // create renderer
+        this.renderer = PIXI.autoDetectRenderer({
+            height: window.innerHeight,
+            width: window.innerWidth,
+        });
         this.canvasContainer.appendChild(this.renderer.view);
         this.renderer.render(this);
+    }
 
-        this.mouse = {
-            position: new PIXI.Point(0, 0),
-        };
-        this.on("mousemove", (e: any) => {
-            this.mouse.position.set(
-                e.data.global.x,
-                e.data.global.y,
-            );
-        });
+    /**
+     * Get the stage width
+     */
+    getWidth() {
+        return this.canvasContainer.clientWidth;
+    }
 
-        this.lastUpdateDelta = 0;
+    /**
+     * Get the stage height
+     */
+    getHeight() {
+        return this.canvasContainer.clientHeight;
+    }
+
+    /**
+     * Update every DisplayObject on stage
+     */
+    update() {
+        const currentDateMs = Date.now() / 1000;
+        this.lastDelta = currentDateMs - this.lastUpdateDelta;
+        this.lastUpdateDelta = currentDateMs;
+        if (this.lastDelta > 1) this.lastDelta = 0;
+        super.update(this.lastDelta);
+
+        this.renderer.render(this);
+        requestAnimationFrame(this.update.bind(this));
     }
 
     /**
@@ -60,42 +89,27 @@ export class Stage extends DisplayObjectContainer {
             this.removeChildAt(0);
         }
 
-        const nodeContainer: NodeContainer = new NodeContainer(this);
-        nodeContainer.populate();
-        this.addChild(nodeContainer);
-
         // average circle
-        const avgCircle: DisplayObject = new AverageCircle(
+        const avgCircle: PowerCircle = new PowerCircle(
             this,
             this.getWidth() / 2,
             6 * this.getHeight() / 10);
         this.addChild(avgCircle);
+
+        // node container
+        const nodeContainer: NodeContainer = new NodeContainer(this, avgCircle);
+        nodeContainer.populate();
+        this.addChildAt(nodeContainer, 0);
 
         this.addChildAt(new AnimatedBackground(this), 0);
 
         this.run();
     }
 
-    public getWidth() {
-        return this.canvasContainer.clientWidth;
-    }
-
-    public getHeight() {
-        return this.canvasContainer.clientHeight;
-    }
-
-    public update() {
-        const t = Date.now() / 1000;
-        this.lastDelta = t - this.lastUpdateDelta;
-        this.lastUpdateDelta = t;
-        if (this.lastDelta > 1) { this.lastDelta = 0; }
-        super.update(this.lastDelta);
-
-        this.renderer.render(this);
-        requestAnimationFrame(this.update.bind(this));
-    }
-
-    public run() {
+    /**
+     * Run the stage
+     */
+    run() {
         this.lastUpdateDelta = Date.now() / 1000;
         requestAnimationFrame(this.update.bind(this));
     }
