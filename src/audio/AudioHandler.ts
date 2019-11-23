@@ -1,68 +1,96 @@
-/**
- * @TODO this should not be static
- */
+import Timer = NodeJS.Timer;
+
+
 export default class AudioHandler {
 
-    public static readonly FFT_SIZE: number = 256;
+    /**
+     * Size of the FFT
+     */
+    static readonly FFT_SIZE: number = 512;
 
-    public static readonly STATS_UPDATE_INTERVAL: number = 1000 / 40;
+    /**
+     * Interval for computing audio statistics (updating the waveform)
+     */
+    static readonly STATS_UPDATE_INTERVAL: number = 1000 / 60;
 
-    public static context: AudioContext;
+    /**
+     * Audio context
+     */
+    static context: AudioContext;
 
-    public static analyser: AnalyserNode;
+    /**
+     * Audio analyser
+     */
+    static analyser: AnalyserNode;
 
-    public static gain: GainNode;
+    /**
+     * Audio gain handler
+     */
+    static gain: GainNode;
 
-    public static song: HTMLAudioElement;
+    /**
+     * HTML audio element
+     */
+    static song: HTMLAudioElement;
 
     /**
      * Current waveform
      */
-    public static waveform: Float32Array;
+    static waveform: Float32Array;
 
     /**
      * Interpolated waveform
      */
-    public static firstOrderWaveform: Float32Array;
+    static firstOrderWaveform: Float32Array;
 
     /**
      * Current average
      */
-    public static average: number = 0;
+    static average: number = 0;
 
     /**
      * Flattened average (1st order)
      */
-    public static firstOrderAverage: number = 0;
+    static firstOrderAverage: number = 0;
 
     /**
      * Flattened average (linear)
      */
-    public static linearAverage: number = 0;
+    static linearAverage: number = 0;
 
     /**
      * Current minimum amplitude on the FFT
      */
-    public static minimum: number = 0;
+    static minimum: number = 0;
 
     /**
      * Current minimum amplitude on the FFT
      */
-    public static maximum: number = 0;
+    static maximum: number = 0;
 
     /**
-     *
+     * Whether the music is currently playing
      */
-    public static isPlaying: boolean;
+    static isPlaying: boolean;
+
+    /**
+     * Date of the last update
+     */
+    private static lastUpdateDelta: number = 0;
+
+    /**
+     * Timer for the stats interval update
+     */
+    private static updateStatsInterval: Timer;
 
     /**
      *
      * @param {string} src
      */
-    public static init(src: string) {
+    static init(src: string) {
 
         // context
-        this.context = new (AudioContext || (window as any).webkitAudioContext)();
+        this.context = new (AudioContext || (<any>window)['webkitAudioContext'])();
 
         // gain
         this.gain = AudioHandler.context.createGain();
@@ -70,7 +98,7 @@ export default class AudioHandler {
 
         // song
         this.song = new Audio(src);
-        this.song.crossOrigin = "anonymous";
+        this.song.crossOrigin = 'anonymous';
         this.isPlaying = false;
 
         // source
@@ -92,7 +120,7 @@ export default class AudioHandler {
     /**
      * @TODO optimize. functional javascript gives bad performances
      */
-    public static updateStats() {
+    static updateStats() {
 
         const delta: number = (Date.now() - this.lastUpdateDelta) / 1000;
 
@@ -103,11 +131,10 @@ export default class AudioHandler {
         this.firstOrderAverage += (this.average - this.firstOrderAverage) * 0.5 * delta;
         this.linearAverage += delta * (this.average > this.linearAverage ? 1 : -1);
         this.waveform.forEach((value, index) => {
-            if (value > this.firstOrderWaveform[index]) {
+            if (value > this.firstOrderWaveform[index])
                 this.firstOrderWaveform[index] = value;
-            } else {
-                this.firstOrderWaveform[index] += (value - this.firstOrderWaveform[index]) * 1.1 * delta;
-            }
+            else
+                this.firstOrderWaveform[index] += (value - this.firstOrderWaveform[index]) * 0.5 * delta;
         });
 
         this.lastUpdateDelta = Date.now();
@@ -117,7 +144,7 @@ export default class AudioHandler {
      *
      * @returns {Promise<void>}
      */
-    public static async play() {
+    static async play() {
 
         await this.song.play();
 
@@ -125,7 +152,4 @@ export default class AudioHandler {
 
         this.updateStats();
     }
-
-    private static lastUpdateDelta: number = 0;
-    private static updateStatsInterval: any;
 }

@@ -1,7 +1,7 @@
-import {Stage} from "../src/animation/engine/Stage";
 import AudioHandler from "../src/audio/AudioHandler";
+import {PowerAudio} from "../src/PowerAudio";
 
-let stage: Stage;
+let powerAudio: PowerAudio;
 
 /**
  * To run only once
@@ -14,9 +14,7 @@ async function init() {
     await restartSong();
 
     // animation
-    stage = new Stage("poweraudio");
-    stage.start();
-
+    powerAudio = new PowerAudio("poweraudio");
     (document.getElementById("start-button") as any).remove();
 }
 
