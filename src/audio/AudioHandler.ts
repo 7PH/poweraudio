@@ -118,7 +118,7 @@ export default class AudioHandler {
     }
 
     /**
-     * @TODO optimize. functional javascript gives bad performances
+     * @TODO optimize. functional javascript gives poor performances. loops should be mutualized.
      */
     static updateStats() {
 

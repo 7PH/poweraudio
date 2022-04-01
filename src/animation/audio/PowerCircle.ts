@@ -175,7 +175,7 @@ export class PowerCircle extends DisplayObject {
         const wave: Float32Array = AudioHandler.firstOrderWaveform;
         const waveAverage: number = wave.reduce((acc, v) => acc + v, 0) / wave.length;
         const waveMinimum: number = wave.reduce((acc, v) => Math.min(acc, v), wave[0]);
-        const maxAmplitude: number = 100; // in pixels
+        const maxAmplitude: number = this.radius;
         // first
         const points: Array<{x: number, y: number}> = [];
         const points2: Array<{x: number, y: number}> = [];
@@ -193,12 +193,14 @@ export class PowerCircle extends DisplayObject {
             points.push({x: - points[i].x, y: points[i].y});
             points2.push({x: - points2[i].x, y: points2[i].y});
         }
+        // outlined waveform
         this.graphics.beginFill(0xFFFFFF, 0.02);
         this.graphics.lineStyle(this.lineWidth, 0xFFFFFF, 0.2);
         this.graphics.moveTo(points[0].x, points[0].y);
         for (const point of points) {
             this.graphics.lineTo(point.x, point.y);
         }
+        // filled waveform
         this.graphics.beginFill(0xFFFFFF, 0.2);
         this.graphics.lineStyle(this.lineWidth, 0xFFFFFF, 1);
         this.graphics.moveTo(points2[0].x, points2[0].y);

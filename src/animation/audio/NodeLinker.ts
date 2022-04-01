@@ -3,7 +3,6 @@ import {Point} from "../engine/Point";
 import {DisplayObjectContainer} from "../engine/DisplayObjectContainer";
 import {Stage} from "../engine/Stage";
 import {Node} from "./Node";
-import AudioHandler from "../../audio/AudioHandler";
 import {NodeContainer} from "./NodeContainer";
 
 
