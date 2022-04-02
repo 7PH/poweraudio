@@ -21,7 +21,7 @@ export class AnimatedBackground extends DisplayObject {
 
         // draw color
         this.graphics.clear();
-        this.graphics.beginFill(0x00FF00);
+        this.graphics.beginFill(grayscale);
         this.graphics.drawRect(0, 0, this.stage.getWidth(), this.stage.getHeight());
         this.graphics.endFill();
     }

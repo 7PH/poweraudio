@@ -2,8 +2,7 @@
 
 <img src="https://travis-ci.com/7PH/poweraudio.svg?branch=master">
 
-
-An intense audio viz you can integrate on the web
+A unique audio viz library you can integrate on the web
 
 <img src="src/assets/banner.gif" style="width: 100%">
 
@@ -44,7 +43,7 @@ To start a viz, it is as simple as instantiating a new PowerAudio.Viz object. Yo
 // Create audio element
 const audio = new Audio('music.mp3');
 // Alternatively: Get audio element from the DOM
-//const audio = document.querySelector('audio')
+//const audio = document.querySelector('audio');
 
 // Start viz in container with id `viz`
 new PowerAudio({
