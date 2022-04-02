@@ -1,68 +1,55 @@
-/**
- * @license MIT
- */
-
-const browserify = require('browserify');
+const gulp = require("gulp");
+const ts = require("gulp-typescript");
+const browserify = require("browserify");
+const source = require("vinyl-source-stream");
 const buffer = require('vinyl-buffer');
-const fs = require('fs-extra');
-const gulp = require('gulp');
-const source = require('vinyl-source-stream');
-const sourcemaps = require('gulp-sourcemaps');
+const tsify = require("tsify");
 const uglify = require('gulp-uglify');
-const webpack = require('gulp-webpack');
 
-const buildDir = process.env.BUILD_DIR || 'build';
-const outDir = "dist";
+
+const tsProject = ts.createProject("tsconfig.json");
 
 /**
- * Bundle JavaScript files produced by the `tsc` task, into a single file named `xterm.js` with
- * Browserify.
+ * Build lib for publishing to npm
  */
-gulp.task('bundle-browserify', function() {
+gulp.task("build-lib", function() {
+    return tsProject.src()
+        .pipe(tsProject())
+        .pipe(gulp.dest("build"));
+});
 
-    // Ensure that the build directory exists
-    fs.ensureDirSync(buildDir);
-
-    let browserifyOptions = {
-        basedir: buildDir,
-        debug: true,
-        entries: [`src/index.js`],
-        standalone: 'PowerAudio',
-        cache: {},
-        packageCache: {}
-    };
-
-    return browserify(browserifyOptions)
+/**
+ * Build dist files for direct web import
+ */
+gulp.task("build-dist", function() {
+    return browserify({ basedir: ".", entries: ["src/lib/web.ts"], })
+        .plugin(tsify, { project: "tsconfig.json" })
         .bundle()
-        .pipe(source('power-audio.js'))
+        .pipe(source('power-audio.js')) 
         .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true, sourceRoot: '..'}))
         .pipe(uglify())
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(outDir));
-
-    // Copy stylesheets from ${outDir}/ to ${buildDir}/
-    // let copyStylesheets = gulp.src(`${outDir}/**/*.css`).pipe(gulp.dest(buildDir));
-    //return merge(bundleStream, copyStylesheets);
+        .pipe(gulp.dest("dist"));
 });
 
-gulp.task('demo-webpack', function() {
-    return gulp
-        .src('build/demo/client.js')
-        .pipe(webpack({ output: { filename: 'client.js' } }))
-        .pipe(gulp.dest('docs'));
+/**
+ * Build public docs
+ */
+gulp.task("build-docs-ts", function() {
+    return browserify({ basedir: ".", entries: ["src/docs/index.ts"], })
+        .plugin(tsify, { project: "tsconfig.docs.json" })
+        .bundle()
+        .pipe(source("bundle.js"))
+        .pipe(gulp.dest("docs"));
 });
-
-gulp.task('demo-copy', function() {
-    return gulp
-        .src(['demo/**/*.{js,html,mp3,css}', 'demo/CNAME'])
-        .pipe(gulp.dest('docs/'));
+gulp.task("build-docs-assets", function() {
+    return gulp.src(["src/docs/*.{html,mp3,css}", "src/docs/CNAME"]).pipe(gulp.dest('docs'));
 });
+gulp.task("build-docs", gulp.series('build-docs-assets', 'build-docs-ts'));
 
-// build bundle .js
-gulp.task('build-bundle', gulp.series('bundle-browserify'));
+/**
+ * Build all
+ */
+gulp.task('build', gulp.parallel('build-lib', 'build-dist', 'build-docs'));
 
-// rebuild demo
-gulp.task('build-docs', gulp.parallel('demo-webpack', 'demo-copy'));
-
-gulp.task('default', gulp.parallel('build-bundle', 'build-docs'));
+// Default
+gulp.task('default', gulp.parallel('build'));

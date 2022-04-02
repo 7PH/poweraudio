@@ -2,15 +2,14 @@
     "name": "power-audio",
     "version": "0.0.1",
     "description": "",
-    "main": "./build/src/index.js",
-    "types": "./build/src/index.d.ts",
+    "main": "./build/index.js",
+    "types": "./build/index.d.ts",
     "scripts": {
-        "clean": "rm -rf ./build/* ./docs/*",
-        "lint": "tslint -c tslint.json 'src/**/*.ts'",
-        "lint-fix": "tslint -c --fix tslint.json 'src/**/*.ts'",
+        "clean": "rm -fr build dist docs",
+        "lint": "tslint -c tslint.json 'src/lib/**/*.ts'",
         "start": "npm run build && http-server ./docs;",
-        "build": "npm run clean && tsc && gulp",
-        "test": "npm run build && mocha build/test/index.js"
+        "build": "npm run clean && gulp",
+        "test": "npm run build"
     },
     "repository": {
         "type": "git",
@@ -23,24 +22,18 @@
         "url": "https://github.com/7PH/power-audio/issues"
     },
     "homepage": "https://github.com/7PH/power-audio#readme",
-    "dependencies": {},
     "devDependencies": {
-        "@types/node": "^10.12.10",
-        "pixi.js": "^5.2.0",
-        "browserify": "^16.2.3",
-        "cached-path-relative": "^1.0.2",
-        "child_process": "^1.0.2",
-        "fs-extra": "^7.0.1",
-        "gulp": "^4.0.0",
+        "@types/node": "^10.17.60",
+        "browserify": "^16.5.2",
+        "gulp": "^4.0.2",
         "gulp-sourcemaps": "^2.6.4",
-        "gulp-uglify": "^3.0.1",
-        "gulp-webpack": "^1.5.0",
-        "os": "^0.1.1",
-        "ts-loader": "^5.3.1",
+        "gulp-typescript": "^6.0.0-alpha.1",
+        "gulp-uglify": "^3.0.2",
+        "pixi.js": "^5.2.0",
+        "tsify": "^5.0.4",
         "tslint": "^5.11.0",
         "typescript": "^3.1.6",
         "vinyl-buffer": "^1.0.1",
-        "vinyl-source-stream": "^2.0.0",
-        "webpack": "^4.26.1"
+        "vinyl-source-stream": "^2.0.0"
     }
 }

@@ -3,18 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>PowerAudio demo</title>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.2.0/pixi.min.js'></script>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: black;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #visualization {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        p {
+            color: white;
+        }
+
+        audio {
+            margin: 0 auto;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
     <!-- start button -->
-    <p id="start-button">click anywhere on the screen to start the animation</p>
+    <p id="start-info">click anywhere on the screen to start the animation</p>
 
     <!-- animation -->
-    <div id="poweraudio"></div>
+    <div id="visualization"></div>
+
+    <!-- audio controls -->
+    <audio id="audio" preload="auto" crossorigin="anonymous" controls="true"><source src="music.mp3" type="audio/mpeg"></audio>
 
     <!-- init script -->
-    <script src="client.js"></script>
+    <script src="bundle.js"></script>
 </body>
 </html>

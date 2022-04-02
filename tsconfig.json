@@ -9,11 +9,10 @@
         ],
         "outDir": "build",
         "removeComments": true,
-        "strict": true
+        "strict": true,
+        "declaration": true
     },
     "include": [
-        "src/**/*",
-        "test/**/*",
-        "demo/**/*"
+        "src/lib/**/*.ts"
     ]
 }

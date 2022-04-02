@@ -3,54 +3,60 @@
 <img src="https://travis-ci.com/7PH/power-audio.svg?branch=master">
 
 
-An original audio visualization you can integrate on the web
+An intense audio viz you can integrate on the web
 
-<img src="doc/banner.png" style="width: 100%">
+<img src="src/assets/banner.png" style="width: 100%">
 
-## Download
+## Add PowerAudio to your project
 
-You need to:
-1. Download the files in the dist folder
-2. Include `pixi.js` library & `power-audio.js` file in the your html head
-3. Use `new PowerAudio('canvas-id').play('path-to-music.mp3')` to start the visualization
+#### Using npm
 
-### Example
+1. Add this library into your project
+```bash
+npm i --save power-audio
+```
 
-Here is a very simple example that will play the visualization fullscreen
+2. Import the PowerAudio object from the lib
+```javascript
+// JS ES5
+const PowerAudio = require('power-audio');
+// JS ES6/TypeScript
+import { PowerAudio } from 'power-audio';
+```
+
+#### Using direct web import
+
+1. Import power-audio.js in your html
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.2.0/pixi.min.js'></script>
-    <script src="dist/power-audio.js"></script>
-    <style>
-        body { margin: 0; overflow: hidden; }
-        #poweraudio, canvas { width: 100%; height: 100%; }
-    </style>
-</head>
-<body>
-    <div id="poweraudio"></div>
-    <script>
-        window.onload = () => {
-            new PowerAudio('poweraudio')
-                .play('music.mp3');
-        };
-    </script>
-</body>
-</html>
+<script src="https://raw.githubusercontent.com/7PH/power-audio/master/dist/power-audio.js"></script>
 ```
 
-## Run locally
+2. That's it, you now have a global `PowerAudio` object registered to `window`
 
-Clone this repository, install dependencies, then run `npm start`
-```bash
-git clone https://github.com/7PH/power-audio.git;
-cd power-audio;
-npm i;
-npm start;
+## Start a viz
+
+To start a viz, it is as simple as instantiating a new PowerAudio.Viz object. You have to specify the following options:
+- container: Query selector for where to put the visualization
+- source: Audio source element (HTMLAudioElement)
+
+```javascript
+// Create audio element
+const audio = new Audio('music.mp3');
+// Alternatively: Get audio element from the DOM
+//const audio = document.querySelector('audio')
+
+// Start viz in container with id `viz`
+new PowerAudio({
+    container: '#viz',
+    source: audio,
+});
+
+// Play audio
+audio.play();
 ```
 
-The demo will run on `localhost:8080`
+## Examples
 
+Find examples below:
+- [TypeScript, Full screen](https://github.com/7PH/power-audio/tree/master/src/docs)
