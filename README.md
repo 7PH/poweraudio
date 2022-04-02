@@ -5,7 +5,7 @@
 
 An intense audio viz you can integrate on the web
 
-<img src="src/assets/banner.png" style="width: 100%">
+<img src="src/assets/banner.gif" style="width: 100%">
 
 ## Add PowerAudio to your project
 

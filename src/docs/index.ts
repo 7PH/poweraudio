@@ -7,10 +7,10 @@ const start = () => {
     // Hide initial message
     (document.querySelector('#start-info') as HTMLElement).remove();
 
-    // Show audio element
+    // Get a reference to the audio element
     const audio = document.querySelector('audio') as HTMLAudioElement;
 
-    // Show it
+    // Show audio element with controls
     audio.style.display = 'block';
 
     // Start viz

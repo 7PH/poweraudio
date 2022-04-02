@@ -100,6 +100,13 @@ export class Viz {
         // Delta time, in seconds
         const delta = (Date.now() - this.lastUpdateDate.getTime()) / 1000;
 
+        // If delta is too big (>1s), we skip the update
+        if (delta > 1.0) {
+            this.lastUpdateDate = new Date();
+            requestAnimationFrame(this.updateStats.bind(this));
+            return;
+        }
+
         // Analyze waveform data
         this.analyser.getFloatTimeDomainData(this.waveform.timeDomainData);
         this.waveform.averageGain = this.waveform.timeDomainData.reduce((prev, curr) => prev + Math.abs(curr), 0) / this.analyser.frequencyBinCount;

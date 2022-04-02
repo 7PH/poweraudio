@@ -48,8 +48,8 @@ export class Stage extends DisplayObjectContainer {
 
         // create renderer
         this.renderer = PIXI.autoDetectRenderer({
-            width: window.innerWidth,
-            height: window.innerHeight
+            width: this.canvasContainer.clientWidth,
+            height: this.canvasContainer.clientHeight,
         });
         this.canvasContainer.appendChild(this.renderer.view);
         this.renderer.render(this);

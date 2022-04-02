@@ -1,9 +1,9 @@
 {
     "name": "poweraudio",
-    "version": "0.1.0",
+    "version": "0.1.4",
     "description": "An intense audio visualization library you can integrate anywhere",
-    "main": "./build/index.js",
-    "types": "./build/index.d.ts",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
     "scripts": {
         "clean": "rm -fr build dist docs",
         "lint": "tslint -c tslint.json 'src/lib/**/*.ts'",
@@ -22,6 +22,9 @@
         "url": "https://github.com/7PH/poweraudio/issues"
     },
     "homepage": "https://github.com/7PH/poweraudio#readme",
+    "dependencies": {
+        "pixi.js": "^5.2.0"
+    },
     "devDependencies": {
         "@types/node": "^10.17.60",
         "browserify": "^16.5.2",
@@ -29,7 +32,6 @@
         "gulp-sourcemaps": "^2.6.4",
         "gulp-typescript": "^6.0.0-alpha.1",
         "gulp-uglify": "^3.0.2",
-        "pixi.js": "^5.2.0",
         "tsify": "^5.0.4",
         "tslint": "^5.11.0",
         "typescript": "^3.1.6",
