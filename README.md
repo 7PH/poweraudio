@@ -1,6 +1,6 @@
 # Power Audio
 
-<img src="https://travis-ci.com/7PH/power-audio.svg?branch=master">
+<img src="https://travis-ci.com/7PH/poweraudio.svg?branch=master">
 
 
 An intense audio viz you can integrate on the web
@@ -13,23 +13,23 @@ An intense audio viz you can integrate on the web
 
 1. Add this library into your project
 ```bash
-npm i --save power-audio
+npm i --save poweraudio
 ```
 
 2. Import the PowerAudio object from the lib
 ```javascript
 // JS ES5
-const PowerAudio = require('power-audio');
+const PowerAudio = require('poweraudio');
 // JS ES6/TypeScript
-import { PowerAudio } from 'power-audio';
+import { PowerAudio } from 'poweraudio';
 ```
 
 #### Using direct web import
 
-1. Import power-audio.js in your html
+1. Import poweraudio.js in your html
 
 ```html
-<script src="https://raw.githubusercontent.com/7PH/power-audio/master/dist/power-audio.js"></script>
+<script src="https://raw.githubusercontent.com/7PH/poweraudio/master/dist/poweraudio.js"></script>
 ```
 
 2. That's it, you now have a global `PowerAudio` object registered to `window`
@@ -59,4 +59,4 @@ audio.play();
 ## Examples
 
 Find examples below:
-- [TypeScript, Full screen](https://github.com/7PH/power-audio/tree/master/src/docs)
+- [TypeScript, Full screen](https://github.com/7PH/poweraudio/tree/master/src/docs)

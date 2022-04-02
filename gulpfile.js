@@ -25,7 +25,7 @@ gulp.task("build-dist", function() {
     return browserify({ basedir: ".", entries: ["src/lib/web.ts"], })
         .plugin(tsify, { project: "tsconfig.json" })
         .bundle()
-        .pipe(source('power-audio.js')) 
+        .pipe(source('poweraudio.js'))
         .pipe(buffer())
         .pipe(uglify())
         .pipe(gulp.dest("dist"));
@@ -38,7 +38,9 @@ gulp.task("build-docs-ts", function() {
     return browserify({ basedir: ".", entries: ["src/docs/index.ts"], })
         .plugin(tsify, { project: "tsconfig.docs.json" })
         .bundle()
-        .pipe(source("bundle.js"))
+        .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(uglify())
         .pipe(gulp.dest("docs"));
 });
 gulp.task("build-docs-assets", function() {
