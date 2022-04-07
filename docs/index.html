@@ -8,6 +8,8 @@
             background-color: black;
             overflow: hidden;
             text-align: center;
+            position: relative;
+            margin: 0;
         }
 
         #visualization {
@@ -17,27 +19,27 @@
         }
 
         p {
+            position: fixed;
+            top: calc(50% - 50px);
+            width: 100%;
             color: white;
+            font-weight: bold;
+            font-size: 50px;
+            font-family: monospace;
+            margin: 0;
         }
 
         audio {
-            margin: 0 auto;
+            margin: 10px auto 0 auto;
             display: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- start button -->
-    <p id="start-info">click anywhere on the screen to start the animation</p>
-
-    <!-- animation -->
+    <p id="start-info">CLICK TO START</p>
     <div id="visualization"></div>
-
-    <!-- audio controls -->
     <audio id="audio" preload="auto" crossorigin="anonymous" controls="true"><source src="music.mp3" type="audio/mpeg"></audio>
-
-    <!-- init script -->
     <script src="bundle.js"></script>
 </body>
 </html>
