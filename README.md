@@ -46,13 +46,16 @@ const audio = new Audio('music.mp3');
 //const audio = document.querySelector('audio');
 
 // Start viz in container with id `viz`
-new PowerAudio({
+const viz = new PowerAudio.Viz({
     container: '#viz',
     source: audio,
 });
 
 // Play audio
 audio.play();
+
+// Make the PowerCircle (the big circle at the center of the screen) do a backflip
+viz.flip();
 ```
 
 ## Examples

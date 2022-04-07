@@ -96,7 +96,7 @@ export class Viz {
     /**
      * Update waveform data
      */
-    updateStats() {
+    private updateStats() {
         // Delta time, in seconds
         const delta = (Date.now() - this.lastUpdateDate.getTime()) / 1000;
 
@@ -126,5 +126,16 @@ export class Viz {
         // Loop
         this.lastUpdateDate = new Date();
         requestAnimationFrame(this.updateStats.bind(this));
+    }
+
+    /**
+     * Make the PowerCircle flip
+     */
+    flip() {
+        const powerCircle = this.stage.powerCircle;
+        if (! powerCircle) {
+            throw new Error('Unable to make the PowerCircle flip');
+        }
+        powerCircle.flip();
     }
 }

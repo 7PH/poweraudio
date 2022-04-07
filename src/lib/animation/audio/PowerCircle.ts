@@ -12,7 +12,7 @@ export class PowerCircle extends DisplayObject {
     public lineWidth: number = 1;
 
     /**
-     * Radius when no music is there in pixels
+     * Minimum possible radius when audio volume is 0, in pixels
      */
     public baseRadius: number;
 
@@ -176,7 +176,7 @@ export class PowerCircle extends DisplayObject {
         const waveAverage: number = wave.reduce((acc, v) => acc + v, 0) / wave.length;
         const waveMinimum: number = wave.reduce((acc, v) => Math.min(acc, v), wave[0]);
         const maxAmplitude: number = this.radius;
-        // first
+        // compute points for outlined/filled waveforms
         const points: Array<{x: number, y: number}> = [];
         const points2: Array<{x: number, y: number}> = [];
         for (let i: number = 0, angle: number = Math.PI / 2 - 0.5 * Math.PI / wave.length; i < wave.length; ++ i, angle += Math.PI / wave.length) {
@@ -226,5 +226,13 @@ export class PowerCircle extends DisplayObject {
         this.graphics.beginFill(0xFFFFFF, 1);
         this.graphics.drawRect(- eyesSize * 0.5, eyesY - eyesSize * 0.5, eyesSize, eyesSize);
         this.graphics.drawRect(this.radius * 0.3 - eyesSize * 0.5, eyesY - eyesSize * 0.5, eyesSize, eyesSize);
+    }
+
+    /**
+     * Make this circle flip
+     */
+    public flip() {
+        this.rotationVelocity = - Math.PI * 4;
+        this.targetBaseRotation -= Math.PI * 2;
     }
 }

@@ -14,13 +14,16 @@ const start = () => {
     audio.style.display = 'block';
 
     // Start viz
-    new PowerAudio.Viz({
+    const viz = new PowerAudio.Viz({
         container: '#visualization',
         source: audio,
     });
 
-    // Start audio
+    // Play audio
     audio.play();
+
+    // Make circle flip
+    viz.flip();
 };
 
 window.onload = () => {

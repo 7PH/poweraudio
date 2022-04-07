@@ -1,6 +1,6 @@
 {
     "name": "poweraudio",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "A unique audio viz library you can integrate on the web",
     "main": "build/index.js",
     "types": "build/index.d.ts",

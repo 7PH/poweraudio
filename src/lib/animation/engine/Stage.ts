@@ -35,6 +35,11 @@ export class Stage extends DisplayObjectContainer {
      */
     public lastDelta: number = 0;
 
+    /**
+     * Reference to the PowerCircle
+     */
+    public powerCircle: PowerCircle | undefined;
+
     constructor(canvasSelector: string, viz: Viz) {
 
         // we want the stage typed as 'Stage'
@@ -95,15 +100,15 @@ export class Stage extends DisplayObjectContainer {
         }
 
         // average circle
-        const avgCircle: PowerCircle = new PowerCircle(
+        this.powerCircle = new PowerCircle(
             this,
             this.getWidth() / 2,
             6 * this.getHeight() / 10
         );
-        this.addChild(avgCircle);
+        this.addChild(this.powerCircle);
 
         // node container
-        const nodeContainer: NodeContainer = new NodeContainer(this, avgCircle);
+        const nodeContainer: NodeContainer = new NodeContainer(this, this.powerCircle);
         nodeContainer.populate();
         this.addChildAt(nodeContainer, 0);
 
