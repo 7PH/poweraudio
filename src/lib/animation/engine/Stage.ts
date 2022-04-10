@@ -40,7 +40,7 @@ export class Stage extends DisplayObjectContainer {
      */
     public powerCircle: PowerCircle | undefined;
 
-    constructor(canvasSelector: string, viz: Viz) {
+    constructor(selectorOrNode: string | HTMLElement, viz: Viz) {
 
         // we want the stage typed as 'Stage'
         //  even if it is null on the Stage itself.
@@ -49,7 +49,11 @@ export class Stage extends DisplayObjectContainer {
         this.viz = viz;
 
         // init container
-        this.canvasContainer = document.querySelector(canvasSelector) as HTMLElement;
+        if (typeof selectorOrNode === "string") {
+            this.canvasContainer = document.querySelector(selectorOrNode) as HTMLElement;
+        } else {
+            this.canvasContainer = selectorOrNode;
+        }
 
         // create renderer
         this.renderer = PIXI.autoDetectRenderer({

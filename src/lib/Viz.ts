@@ -6,12 +6,17 @@ export interface VizOptions {
     /**
      * Container for the visualization. Must be a query selector or an HTML element
      */
-    container: string,
+    container: string | HTMLElement,
 
     /**
      * Audio object used as source
      */
     source: HTMLAudioElement,
+
+    /**
+     * Whether to start audio analysis now (default: true)
+     */
+    startAnalysis?: boolean,
 };
 
 /**
@@ -23,13 +28,13 @@ export class Viz {
 
     public readonly options: VizOptions;
 
-    public readonly context: AudioContext;
+    public context!: AudioContext;
 
-    public readonly gain: GainNode;
+    public gain!: GainNode;
 
-    public readonly audio: HTMLAudioElement;
+    public audio!: HTMLAudioElement;
 
-    public readonly analyser: AnalyserNode;
+    public analyser!: AnalyserNode;
 
     public readonly stage: Stage;
 
@@ -43,12 +48,34 @@ export class Viz {
         averageGainFirstOrder: number,
     };
 
-    public lastUpdateDate: Date;
+    public lastUpdateDate!: Date;
 
     constructor(options: VizOptions) {
 
         // Store options
         this.options = options;
+
+        // Waveform data
+        this.waveform = {
+            timeDomainData: new Float32Array(Viz.BIN_COUNT),
+            timeDomainDataSmooth: new Float32Array(Viz.BIN_COUNT),
+            minimumGain: 0,
+            maximumGain: 0,
+            averageGain: 0,
+            averageGainLinearized: 0,
+            averageGainFirstOrder: 0,
+        };
+
+        // Start stage
+        this.stage = new Stage(options.container, this);
+        this.stage.start();
+
+        if (options.startAnalysis !== false) {
+            this.start();
+        }
+    }
+
+    start() {
 
         // Audio context
         this.context = new AudioContext();
@@ -57,7 +84,7 @@ export class Viz {
         this.gain = this.context.createGain();
 
         // Audio
-        this.audio = options.source;
+        this.audio = this.options.source;
 
         // Source
         const audioSource = this.context.createMediaElementSource(this.audio);
@@ -66,31 +93,15 @@ export class Viz {
         this.analyser = this.context.createAnalyser();
         this.analyser.fftSize = Viz.BIN_COUNT;
 
-        // Waveform data
-        this.waveform = {
-            timeDomainData: new Float32Array(this.analyser.frequencyBinCount),
-            timeDomainDataSmooth: new Float32Array(this.analyser.frequencyBinCount),
-            minimumGain: 0,
-            maximumGain: 0,
-            averageGain: 0,
-            averageGainLinearized: 0,
-            averageGainFirstOrder: 0,
-        };
-
         // Connect nodes
         // audio source -> gain -> analyser -> destination
         audioSource.connect(this.gain);
         this.gain.connect(this.analyser);
         this.analyser.connect(this.context.destination);
 
-        // Start stage
-        this.stage = new Stage(options.container, this);
-
         // Start periodical analysis
         this.lastUpdateDate = new Date();
         this.updateStats();
-
-        this.stage.start();
     }
 
     /**
