@@ -1,7 +1,7 @@
 {
     "name": "poweraudio",
-    "version": "0.1.7",
-    "description": "A unique audio viz library you can integrate on the web",
+    "version": "0.1.8",
+    "description": "An innovative audio visualization library",
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "scripts": {
@@ -27,6 +27,7 @@
     },
     "devDependencies": {
         "@types/node": "^10.17.60",
+        "@types/resize-observer-browser": "^0.1.7",
         "browserify": "^16.5.2",
         "gulp": "^4.0.2",
         "gulp-sourcemaps": "^2.6.4",

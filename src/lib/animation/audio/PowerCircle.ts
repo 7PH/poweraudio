@@ -12,11 +12,6 @@ export class PowerCircle extends DisplayObject {
     public lineWidth: number = 1;
 
     /**
-     * Minimum possible radius when audio volume is 0, in pixels
-     */
-    public baseRadius: number;
-
-    /**
      * Current radius in pixels
      */
     public radius: number;
@@ -74,13 +69,13 @@ export class PowerCircle extends DisplayObject {
     /**
      *
      * @param stage
+     * @param baseRadius Minimum possible radius when audio intensity is lowest
      * @param centerX
      * @param centerY
      */
-    constructor(stage: Stage, private centerX: number, private centerY: number) {
+    constructor(stage: Stage, private baseRadius: number, private centerX: number, private centerY: number) {
         super(stage);
 
-        this.baseRadius = Math.min(stage.getWidth(), stage.getHeight()) / 12;
         this.radius = this.baseRadius;
 
         this.filter = new PIXI.filters.BlurFilter();
@@ -90,6 +85,24 @@ export class PowerCircle extends DisplayObject {
 
         this.position.x = centerX;
         this.position.y = centerY;
+    }
+
+    /**
+     * Change the target center position of this PowerCircle
+     * @param baseRadius
+     */
+    setBaseRadius(baseRadius: number) {
+        this.baseRadius = baseRadius;
+    }
+
+    /**
+     * Change the target center position of this PowerCircle
+     * @param x 
+     * @param y 
+     */
+    setCenter(x: number, y: number) {
+        this.centerX = x;
+        this.centerY = y;
     }
 
     /**

@@ -40,7 +40,7 @@ export class Stage extends DisplayObjectContainer {
      */
     public powerCircle: PowerCircle | undefined;
 
-    constructor(selectorOrNode: string | HTMLElement, viz: Viz) {
+    constructor(canvasContainer: HTMLElement, viz: Viz) {
 
         // we want the stage typed as 'Stage'
         //  even if it is null on the Stage itself.
@@ -48,12 +48,7 @@ export class Stage extends DisplayObjectContainer {
 
         this.viz = viz;
 
-        // init container
-        if (typeof selectorOrNode === "string") {
-            this.canvasContainer = document.querySelector(selectorOrNode) as HTMLElement;
-        } else {
-            this.canvasContainer = selectorOrNode;
-        }
+        this.canvasContainer = canvasContainer;
 
         // create renderer
         this.renderer = PIXI.autoDetectRenderer({
@@ -76,6 +71,14 @@ export class Stage extends DisplayObjectContainer {
      */
     getHeight() {
         return this.canvasContainer.clientHeight;
+    }
+
+    resize() {
+        this.renderer.resize(this.canvasContainer.clientWidth, this.canvasContainer.clientHeight);
+        if (this.powerCircle) {
+            this.powerCircle.setBaseRadius(Math.min(this.getWidth(), this.getHeight()) / 12);
+            this.powerCircle.setCenter(this.getWidth() / 2, 6 * this.getHeight() / 10);
+        }
     }
 
     /**
@@ -106,6 +109,7 @@ export class Stage extends DisplayObjectContainer {
         // average circle
         this.powerCircle = new PowerCircle(
             this,
+            Math.min(this.getWidth(), this.getHeight()) / 12,
             this.getWidth() / 2,
             6 * this.getHeight() / 10
         );

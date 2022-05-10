@@ -66,9 +66,23 @@ export class Viz {
             averageGainFirstOrder: 0,
         };
 
+        // Get reference to the container object
+        let canvasContainer;
+        if (typeof options.container === "string") {
+            canvasContainer = document.querySelector(options.container) as HTMLElement;
+        } else {
+            canvasContainer = options.container;
+        }
+        if (! canvasContainer) {
+            throw new Error("Container not found");
+        }
+
         // Start stage
-        this.stage = new Stage(options.container, this);
+        this.stage = new Stage(canvasContainer, this);
         this.stage.start();
+
+        // Listen for container size changes
+        new ResizeObserver((entries: ResizeObserverEntry[]) => this.onContainerResized()).observe(canvasContainer);
 
         if (options.startAnalysis !== false) {
             this.start();
@@ -137,6 +151,10 @@ export class Viz {
         // Loop
         this.lastUpdateDate = new Date();
         requestAnimationFrame(this.updateStats.bind(this));
+    }
+
+    private onContainerResized() {
+        this.stage.resize();
     }
 
     /**

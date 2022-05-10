@@ -2,7 +2,7 @@
 
 <img src="https://travis-ci.com/7PH/poweraudio.svg?branch=master">
 
-A unique audio viz library you can integrate on the web
+An innovative audio visualization library
 
 <img src="src/assets/banner.gif" style="width: 100%">
 
