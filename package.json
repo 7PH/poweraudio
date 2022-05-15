@@ -1,42 +1,54 @@
 {
-    "name": "poweraudio",
-    "version": "0.1.8",
-    "description": "An innovative audio visualization library",
-    "main": "build/index.js",
-    "types": "build/index.d.ts",
-    "scripts": {
-        "clean": "rm -fr build dist docs",
-        "lint": "tslint -c tslint.json 'src/lib/**/*.ts'",
-        "start": "npm run build && http-server ./docs;",
-        "build": "npm run clean && gulp",
-        "test": "npm run build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/7PH/poweraudio.git"
-    },
-    "keywords": [],
-    "author": "Benjamin Raymond <b.raymond@protonmail.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/7PH/poweraudio/issues"
-    },
-    "homepage": "https://github.com/7PH/poweraudio#readme",
-    "dependencies": {
-        "pixi.js": "^5.2.0"
-    },
-    "devDependencies": {
-        "@types/node": "^10.17.60",
-        "@types/resize-observer-browser": "^0.1.7",
-        "browserify": "^16.5.2",
-        "gulp": "^4.0.2",
-        "gulp-sourcemaps": "^2.6.4",
-        "gulp-typescript": "^6.0.0-alpha.1",
-        "gulp-uglify": "^3.0.2",
-        "tsify": "^5.0.4",
-        "tslint": "^5.11.0",
-        "typescript": "^3.1.6",
-        "vinyl-buffer": "^1.0.1",
-        "vinyl-source-stream": "^2.0.0"
-    }
+  "name": "poweraudio",
+  "version": "0.1.8",
+  "description": "An innovative audio visualization library",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "clean": "rm -fr build dist docs",
+    "lint": "tslint -c tslint.json 'src/lib/**/*.ts'",
+    "start": "npm run build && http-server ./docs;",
+    "build": "npm run clean && gulp",
+    "test": "npm run build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook -o docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7PH/poweraudio.git"
+  },
+  "keywords": [],
+  "author": "Benjamin Raymond <b.raymond@protonmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/7PH/poweraudio/issues"
+  },
+  "homepage": "https://github.com/7PH/poweraudio#readme",
+  "dependencies": {
+    "pixi.js": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@storybook/addon-actions": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-interactions": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/addons": "^6.4.22",
+    "@storybook/html": "^6.4.22",
+    "@storybook/testing-library": "^0.0.11",
+    "@storybook/theming": "^6.4.22",
+    "@types/node": "^10.17.60",
+    "@types/resize-observer-browser": "^0.1.7",
+    "babel-loader": "^8.2.5",
+    "browserify": "^16.5.2",
+    "gulp": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-uglify": "^3.0.2",
+    "tsify": "^5.0.4",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
 }

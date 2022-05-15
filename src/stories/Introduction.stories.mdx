@@ -1,0 +1,143 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Introduction" />
+
+<style>{`
+  .subheading {
+    --mediumdark: '#999999';
+    font-weight: 900;
+    font-size: 13px;
+    color: #999;
+    letter-spacing: 6px;
+    line-height: 24px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+
+  .link-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    row-gap: 10px;
+  }
+
+  .link-item {
+    display: block;
+    padding: 20px 30px 20px 15px;
+    border: 1px solid #00000010;
+    border-radius: 5px;
+    transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+    color: #333333;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .link-item:hover {
+    border-color: #1EA7FD50;
+    transform: translate3d(0, -3px, 0);
+    box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+  }
+
+  .link-item:active {
+    border-color: #1EA7FD;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .link-item strong {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+  }
+  
+  .link-item img {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+    flex: none;
+  }
+
+  .link-item span {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+
+  
+`}</style>
+
+# PowerAudio
+
+An innovative audio visualization library you can integrate in the web.
+
+
+<div className="subheading">Try</div>
+
+<div className="link-list">
+  <a
+    className="link-item"
+    href="?path=/story/poweraudio-framed-example--framed-example"
+  >
+    <span>
+      <strong>Simple example</strong>
+      Try a simple example to see how it looks
+    </span>
+  </a>
+</div>
+
+
+<div className="subheading">Install</div>
+
+#### Npm
+
+1. Add this library into your project
+```bash
+npm i --save poweraudio
+```
+
+2. Import the PowerAudio object from the lib
+```javascript
+// JS ES5
+const PowerAudio = require('poweraudio');
+// JS ES6/TypeScript
+import { PowerAudio } from 'poweraudio';
+```
+
+#### Direct web import
+
+1. Import poweraudio.js in your html
+
+```html
+<script src="https://raw.githubusercontent.com/7PH/poweraudio/master/dist/poweraudio.js"></script>
+```
+
+2. You now have a global `PowerAudio` object registered to `window`
+
+
+
+
+
+<div className="subheading">Use</div>
+
+To start a viz, instantiate a new PowerAudio.Viz object. You have to specify the following options:
+- container: Query selector for where to put the visualization
+- source: Audio source element (HTMLAudioElement)
+
+```javascript
+// Create audio element
+const audio = new Audio('music.mp3');
+// Alternatively: Get audio element from the DOM
+//const audio = document.querySelector('audio');
+
+// Start viz in container with id `viz`
+const viz = new PowerAudio.Viz({
+    container: '#viz',
+    source: audio,
+});
+
+// Play audio
+audio.play();
+
+// Make the PowerCircle (the big circle at the center of the screen) do a backflip
+viz.flip();
+```

@@ -1,7 +1,5 @@
 import {DisplayObject} from "../engine/DisplayObject";
 import {Stage} from "../engine/Stage";
-import * as PIXI from "pixi.js";
-import BlurFilter = PIXI.filters.BlurFilter;
 
 
 /**

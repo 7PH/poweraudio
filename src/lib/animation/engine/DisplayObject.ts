@@ -87,6 +87,9 @@ export class DisplayObject extends PIXI.Container {
      * @param vector Force vector, both values in pixels/second2
      */
     setForce (name: string, vector: PIXI.Point | {x: number , y: number}) {
+        if (isNaN(vector.x) || isNaN(vector.y)) {
+            return;
+        }
         this.forces[name] = {
             x: vector.x,
             y: vector.y

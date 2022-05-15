@@ -1,0 +1,36 @@
+
+
+.viz {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+.controls {
+    height: 80px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.controls button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.viz-controls > * {
+    vertical-align: middle;
+    margin-left: 2em;
+}
+
+.viz-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid black;
+}
