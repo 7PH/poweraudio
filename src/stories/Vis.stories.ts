@@ -6,7 +6,7 @@ import { createViz, VizProps } from './Viz';
 export default {
     title: 'PowerAudio/Framed Example',
     argTypes: {
-        backgroundColor: { control: 'color' },
+        
     },
 } as Meta;
 

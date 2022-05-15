@@ -2,14 +2,14 @@ import './viz.css';
 import { PowerAudio } from '../lib/index';
 
 export interface VizProps {
-    backgroundColor?: string;
+    
 }
 
 /**
  * Primary UI component for user interaction
  */
 export const createViz = ({
-    backgroundColor,
+
 }: VizProps) => {
 
     const div = document.createElement('div');
