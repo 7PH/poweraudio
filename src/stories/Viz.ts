@@ -2,7 +2,7 @@ import './viz.css';
 import { PowerAudio } from '../lib/index';
 
 export interface VizProps {
-    
+
 }
 
 /**
@@ -35,7 +35,7 @@ export const createViz = ({
         (event.currentTarget as HTMLButtonElement).style.display = 'none';
 
         // Start viz
-        const audio = new Audio('/music.mp3');
+        const audio = new Audio('music.mp3');
         const container = div.getElementsByClassName('viz-container')[0] as HTMLDivElement;
         viz = new PowerAudio.Viz({
             container,
