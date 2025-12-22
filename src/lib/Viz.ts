@@ -9,9 +9,15 @@ export interface VizOptions {
     container: string | HTMLElement,
 
     /**
-     * Audio object used as source
+     * Audio object used as source (for HTML audio element mode)
      */
-    source: HTMLAudioElement,
+    source?: HTMLAudioElement,
+
+    /**
+     * External analyser node (for system audio mode in desktop app)
+     * When provided, the Viz will use this analyser instead of creating its own
+     */
+    externalAnalyser?: AnalyserNode,
 
     /**
      * Whether to start audio analysis now (default: true)
@@ -90,6 +96,21 @@ export class Viz {
     }
 
     start() {
+        // Check if we're using an external analyser (system audio mode)
+        if (this.options.externalAnalyser) {
+            this.analyser = this.options.externalAnalyser;
+            this.analyser.fftSize = Viz.BIN_COUNT;
+
+            // Start periodical analysis
+            this.lastUpdateDate = new Date();
+            this.updateStats();
+            return;
+        }
+
+        // Original HTML audio element mode
+        if (!this.options.source) {
+            throw new Error("Either 'source' or 'externalAnalyser' must be provided");
+        }
 
         // Audio context
         this.context = new AudioContext();
@@ -133,7 +154,8 @@ export class Viz {
         }
 
         // Analyze waveform data
-        this.analyser.getFloatTimeDomainData(this.waveform.timeDomainData);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.analyser.getFloatTimeDomainData(this.waveform.timeDomainData as any);
         this.waveform.averageGain = this.waveform.timeDomainData.reduce((prev, curr) => prev + Math.abs(curr), 0) / this.analyser.frequencyBinCount;
         this.waveform.minimumGain = this.waveform.timeDomainData.reduce((a, b) => Math.min(a, b), this.waveform.timeDomainData[0]);
         this.waveform.maximumGain = this.waveform.timeDomainData.reduce((a, b) => Math.max(a, b), this.waveform.timeDomainData[0]);

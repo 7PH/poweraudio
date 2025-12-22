@@ -1,0 +1,23 @@
+[package]
+name = "poweraudio-desktop"
+version = "0.1.0"
+description = "System audio visualizer powered by PowerAudio"
+authors = ["you"]
+edition = "2021"
+
+[lib]
+name = "poweraudio_desktop_lib"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-shell = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+cpal = "0.15"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-shell = "2"

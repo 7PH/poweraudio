@@ -4,11 +4,14 @@
   "description": "An innovative audio visualization library",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "workspaces": [
+    "desktop"
+  ],
   "scripts": {
     "clean": "rm -fr build dist docs",
     "lint": "tslint -c tslint.json 'src/lib/**/*.ts'",
     "start": "npm run build && http-server ./docs;",
-    "build": "npm run clean && gulp",
+    "build": "rm -fr build dist docs && tsc -p tsconfig.json && gulp build-dist && gulp build-docs",
     "test": "npm run build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs"
@@ -42,8 +45,6 @@
     "babel-loader": "^8.2.5",
     "browserify": "^16.5.2",
     "gulp": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
     "tsify": "^5.0.4",
     "tslint": "^5.11.0",

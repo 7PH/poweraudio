@@ -1,6 +1,25 @@
-# Global
+# Dependencies
 node_modules
-build
 
-# Only in this directory
-./docs
+# Build outputs
+build
+dist
+docs
+
+# Desktop app (Tauri/Rust)
+desktop/src-tauri/target/
+desktop/dist/
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
