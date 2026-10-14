@@ -37,7 +37,7 @@
     "@storybook/addon-interactions": "^6.4.22",
     "@storybook/addon-links": "^6.4.22",
     "@storybook/addons": "^6.4.22",
-    "@storybook/html": "^6.4.22",
+    "@storybook/html": "^10.6.2",
     "@storybook/testing-library": "^0.0.11",
     "@storybook/theming": "^6.4.22",
     "@types/node": "^10.17.60",
